@@ -9,18 +9,25 @@
         <div id="imagewrapper"></div>
 
         <script>
-            function loadImages(){
-                const imageURLBase = 'https://picsum.photos/' // replace with an actual
-                let amount = Number(document.getElementById('amount').value)
-                const wrapper = document.getElementById('imagewrapper')
-                wrapper.innerHTML=""
+            async function loadImages(){
+                // const imageURLBase = 'https://picsum.photos/' // replace with an actual
+                // let amount = Number(document.getElementById('amount').value)
+                // const wrapper = document.getElementById('imagewrapper')
+                // wrapper.innerHTML=""
 
-                for(var i = 0; i < amount; i ++){
-                    let img = document.createElement('img')
-                    img.src = imageURLBase+Math.trunc(Math.random()*150+412)// fill this in
-                    img.width = 450
-                    wrapper.appendChild(img)
+                // for(var i = 0; i < amount; i ++){
+                //     let img = document.createElement('img')
+                //     img.src = imageURLBase+Math.trunc(Math.random()*150+412)// fill this in
+                //     img.width = 450
+                //     wrapper.appendChild(img)
+                // }
+                const loadfrom = ['./datasets/imagenet', './datasets/vq_diffusion']
+                let metadata = []
+                for(var i = 0; i < loadfrom.length; i++){
+                    let file = await fetch(loadfrom[i]+'/metadata.csv')
+                    metadata[i] = await file.text()
                 }
+                console.log(metadata)
             }
             
             loadImages()
