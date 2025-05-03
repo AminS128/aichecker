@@ -1,0 +1,4 @@
+datasets used:
+vq-diffusion
+imagenet
+from kaggle (add link)
