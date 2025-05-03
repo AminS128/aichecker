@@ -5,7 +5,10 @@
     </head>
     <body>
         Load metadata.csv from dataset:
-        <input type="file" id="fileinput" oninput="loadImages();document.getElementById('reloadbutton').disabled=null">
+        <select id="fileinput">
+            <option>./imagenet</option>
+            <option>./vqdiff-imgnet</option>
+        </select>
         Number of images:
         <input type="number" id ='amount' value="50" style="width:50px" oninput="loadImages()">
         <button id='reloadbutton'onclick="loadImages()" disabled="true">Reload</button>
@@ -21,11 +24,11 @@
 
                 const reader = new FileReader()
 
-                const file = document.getElementById('fileinput').files[0]
+                const file = await fetch("https://amins128.github.io/aichecker/bench/datasets/"+
+                    document.getElementById('fileinput').value + '/metadata.csv'
+                )
 
-                let metadata = 
-                (await (new Blob([new Uint8Array(await file.arrayBuffer())], {type:file.type})).text())
-                .split('\n')// index 0 should not be used
+                let metadata = (await file.text()).split('\n')// index 0 should not be used
 
                 let imgurlbase = './datasets/' + metadata[1].split(',')[1].split('/')[0]+'/'
                 let amount = Number(document.getElementById('amount').value)
